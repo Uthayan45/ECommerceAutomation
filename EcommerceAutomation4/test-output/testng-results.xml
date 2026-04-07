@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="5" passed="5" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-04-07T12:49:47 IST" name="Ecommerce Automation Suite" finished-at="2026-04-07T12:52:39 IST" duration-ms="172461">
+    <groups>
+    </groups>
+    <test started-at="2026-04-07T12:49:47 IST" name="All Tests" finished-at="2026-04-07T12:52:39 IST" duration-ms="172461">
+      <class name="com.ecommerce.tests.ProductFlowTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:50:40 IST" name="setup" finished-at="2026-04-07T12:50:50 IST" duration-ms="10281" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testAddToCart()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:50:50 IST" name="testAddToCart" finished-at="2026-04-07T12:51:10 IST" duration-ms="20362" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddToCart -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:51:11 IST" name="tearDown" finished-at="2026-04-07T12:51:15 IST" duration-ms="4273" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:51:15 IST" name="setup" finished-at="2026-04-07T12:51:24 IST" duration-ms="9177" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testCompletePurchase()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:51:24 IST" name="testCompletePurchase" finished-at="2026-04-07T12:51:56 IST" duration-ms="32360" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCompletePurchase -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:51:56 IST" name="tearDown" finished-at="2026-04-07T12:52:01 IST" duration-ms="4197" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:52:01 IST" name="setup" finished-at="2026-04-07T12:52:12 IST" duration-ms="10952" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testSearchAndFilter()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:52:12 IST" name="testSearchAndFilter" finished-at="2026-04-07T12:52:30 IST" duration-ms="18824" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSearchAndFilter -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.ecommerce.tests.ProductFlowTest@1e44b638]" started-at="2026-04-07T12:52:30 IST" name="tearDown" finished-at="2026-04-07T12:52:39 IST" duration-ms="8994" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.ecommerce.tests.ProductFlowTest -->
+      <class name="com.ecommerce.tests.LoginTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:49:47 IST" name="setup" finished-at="2026-04-07T12:50:00 IST" duration-ms="12745" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testInvalidLogin()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:50:00 IST" name="testInvalidLogin" finished-at="2026-04-07T12:50:08 IST" duration-ms="8555" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testInvalidLogin -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:50:08 IST" name="tearDown" finished-at="2026-04-07T12:50:14 IST" duration-ms="5736" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:50:14 IST" name="setup" finished-at="2026-04-07T12:50:25 IST" duration-ms="10579" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="testValidLogin()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:50:25 IST" name="testValidLogin" finished-at="2026-04-07T12:50:34 IST" duration-ms="9085" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testValidLogin -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.ecommerce.tests.LoginTest@4196c360]" started-at="2026-04-07T12:50:34 IST" name="tearDown" finished-at="2026-04-07T12:50:40 IST" duration-ms="6050" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.ecommerce.tests.LoginTest -->
+    </test> <!-- All Tests -->
+  </suite> <!-- Ecommerce Automation Suite -->
+</testng-results>
