@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,19 +27,21 @@ public class CartPage {
     }
 
     public boolean isCartPageDisplayed() {
-        wait.until(ExpectedConditions.urlContains("cart"));
         return driver.getCurrentUrl().contains("cart");
     }
 
     public int getCartItemCount() {
+
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cartItems));
+
         List<WebElement> items = driver.findElements(cartItems);
+
         return items.size();
     }
 
     public boolean isProductInCart(String productName) {
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cartItems));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cartItemNames));
 
         List<WebElement> items = driver.findElements(cartItemNames);
 
@@ -55,22 +56,13 @@ public class CartPage {
 
     public void proceedToCheckout() {
 
-        wait.until(ExpectedConditions.urlContains("cart"));
-
         WebElement checkoutBtn = wait.until(
-                ExpectedConditions.presenceOfElementLocated(checkoutButton));
+                ExpectedConditions.elementToBeClickable(checkoutButton));
 
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block:'center'});", checkoutBtn);
+                "arguments[0].scrollIntoView(true);", checkoutBtn);
 
-        wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
-
-        try {
-            checkoutBtn.click();
-        } catch (Exception e) {
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].click();", checkoutBtn);
-        }
+        checkoutBtn.click();
     }
 
     public void clickContinueShopping() {
@@ -83,9 +75,8 @@ public class CartPage {
 
     public void removeProduct() {
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(removeButtons));
-
-        List<WebElement> buttons = driver.findElements(removeButtons);
+        List<WebElement> buttons = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(removeButtons));
 
         if (!buttons.isEmpty()) {
             buttons.get(0).click();
