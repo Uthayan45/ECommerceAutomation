@@ -14,10 +14,6 @@ public class ProductFlowTest extends BaseTest {
 
     @Test
     public void testSearchAndFilter() {
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("TEST 3: SEARCH AND FILTER TEST");
-        System.out.println("=".repeat(60));
-
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("standard_user", "secret_sauce");
 
@@ -29,17 +25,10 @@ public class ProductFlowTest extends BaseTest {
 
         int productCount = searchPage.getProductCount();
         Assert.assertTrue(productCount > 0, "No products found after applying filter!");
-
-        System.out.println("\nTEST PASSED: Found " + productCount + " products!\n");
-        sleep(2000);
     }
 
     @Test
     public void testAddToCart() {
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("TEST 4: ADD TO CART TEST");
-        System.out.println("=".repeat(60));
-
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("standard_user", "secret_sauce");
 
@@ -49,25 +38,18 @@ public class ProductFlowTest extends BaseTest {
         SearchPage searchPage = new SearchPage(driver);
         String productName = "Sauce Labs Backpack";
 
-        Assert.assertTrue(searchPage.isProductDisplayed(productName), "Product not found on product page!");
+        Assert.assertTrue(searchPage.isProductDisplayed(productName), "Product not found!");
         searchPage.addToCart(productName);
 
         homePage.goToCart();
 
         CartPage cartPage = new CartPage(driver);
         Assert.assertTrue(cartPage.isCartPageDisplayed(), "Cart page not displayed!");
-        Assert.assertTrue(cartPage.isProductInCart(productName), "Product not found in cart!");
-
-        System.out.println("\nTEST PASSED: Product added to cart successfully!\n");
-        sleep(2000);
+        Assert.assertTrue(cartPage.isProductInCart(productName), "Product not in cart!");
     }
 
     @Test
     public void testCompletePurchase() {
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("TEST 5: COMPLETE PURCHASE FLOW");
-        System.out.println("=".repeat(60));
-
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("standard_user", "secret_sauce");
 
@@ -77,14 +59,14 @@ public class ProductFlowTest extends BaseTest {
         SearchPage searchPage = new SearchPage(driver);
         String productName = "Sauce Labs Backpack";
 
-        Assert.assertTrue(searchPage.isProductDisplayed(productName), "Product not found on product page!");
+        Assert.assertTrue(searchPage.isProductDisplayed(productName), "Product not found!");
         searchPage.addToCart(productName);
 
         homePage.goToCart();
 
         CartPage cartPage = new CartPage(driver);
         Assert.assertTrue(cartPage.isCartPageDisplayed(), "Cart page not displayed!");
-        Assert.assertTrue(cartPage.isProductInCart(productName), "Product not found in cart!");
+        Assert.assertTrue(cartPage.isProductInCart(productName), "Product not in cart!");
 
         cartPage.proceedToCheckout();
 
@@ -93,16 +75,5 @@ public class ProductFlowTest extends BaseTest {
         checkoutPage.finishCheckout();
 
         Assert.assertTrue(checkoutPage.isCheckoutSuccessful(), "Checkout failed!");
-
-        System.out.println("\nTEST PASSED: Purchase completed successfully!\n");
-        sleep(2000);
-    }
-
-    private void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
     }
 }
