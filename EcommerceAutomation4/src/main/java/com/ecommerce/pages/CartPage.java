@@ -27,71 +27,61 @@ public class CartPage {
     }
 
     public boolean isCartPageDisplayed() {
-        wait.until(ExpectedConditions.urlContains("cart"));
+        wait.until(ExpectedConditions.or(
+                ExpectedConditions.urlContains("cart.html"),
+                ExpectedConditions.urlContains("cart")
+        ));
         return driver.getCurrentUrl().contains("cart");
     }
 
     public int getCartItemCount() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
-        List<WebElement> items = driver.findElements(cartItems);
-        return items.size();
+        return driver.findElements(cartItems).size();
     }
 
     public boolean isProductInCart(String productName) {
-
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
+        List<WebElement> items = driver.findElements(cartItemNames);
 
-        List<WebElement> products = driver.findElements(cartItemNames);
-
-        for (WebElement product : products) {
-
-            String name = product.getText().trim();
-
-            if (name.equalsIgnoreCase(productName.trim())) {
+        for (WebElement item : items) {
+            if (item.getText().trim().equalsIgnoreCase(productName.trim())) {
                 return true;
             }
         }
-
         return false;
     }
 
     public void proceedToCheckout() {
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutButton));
-
-        WebElement checkoutBtn = driver.findElement(checkoutButton);
+        WebElement checkoutBtn = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(checkoutButton));
 
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", checkoutBtn);
 
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
 
-        checkoutBtn.click();
+        try {
+            checkoutBtn.click();
+        } catch (Exception e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkoutBtn);
+        }
     }
 
     public void clickContinueShopping() {
-
         WebElement continueBtn = wait.until(
                 ExpectedConditions.elementToBeClickable(continueShoppingButton));
-
         continueBtn.click();
     }
 
     public void removeProduct() {
-
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
+        List<WebElement> buttons = driver.findElements(removeButtons);
 
-        List<WebElement> removeBtn = driver.findElements(removeButtons);
-
-        if (!removeBtn.isEmpty()) {
-
-            WebElement btn = removeBtn.get(0);
-
+        if (!buttons.isEmpty()) {
+            WebElement btn = buttons.get(0);
             ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView(true);", btn);
-
+                    "arguments[0].scrollIntoView({block:'center'});", btn);
             wait.until(ExpectedConditions.elementToBeClickable(btn));
-
             btn.click();
         }
     }
