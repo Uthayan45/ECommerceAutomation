@@ -3,6 +3,7 @@ package com.ecommerce.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,7 +15,7 @@ public class HomePage {
     private WebDriverWait wait;
 
     private By productsTitle = By.className("title");
-    private By cartIcon = By.className("shopping_cart_link");
+    private By cartIcon = By.cssSelector(".shopping_cart_link");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -22,20 +23,26 @@ public class HomePage {
     }
 
     public boolean isHomePageDisplayed() {
-
         WebElement title = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(productsTitle));
-
-        return title.getText().equalsIgnoreCase("Products");
+        return title.getText().trim().equalsIgnoreCase("Products");
     }
 
     public void goToCart() {
-
         WebElement cart = wait.until(
-                ExpectedConditions.elementToBeClickable(cartIcon));
+                ExpectedConditions.presenceOfElementLocated(cartIcon));
 
-        cart.click();
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", cart);
 
-        wait.until(ExpectedConditions.urlContains("cart"));
+        wait.until(ExpectedConditions.elementToBeClickable(cart));
+
+        try {
+            cart.click();
+        } catch (Exception e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cart);
+        }
+
+        wait.until(ExpectedConditions.urlContains("cart.html"));
     }
 }
