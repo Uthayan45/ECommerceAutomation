@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,12 +36,17 @@ public class HomePage {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", cart);
 
+        wait.until(ExpectedConditions.visibilityOf(cart));
         wait.until(ExpectedConditions.elementToBeClickable(cart));
 
         try {
-            cart.click();
+            new Actions(driver).moveToElement(cart).click().perform();
         } catch (Exception e) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cart);
+            try {
+                cart.click();
+            } catch (Exception ex) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cart);
+            }
         }
 
         wait.until(ExpectedConditions.or(
