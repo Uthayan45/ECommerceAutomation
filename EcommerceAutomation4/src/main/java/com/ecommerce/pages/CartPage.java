@@ -16,6 +16,7 @@ public class CartPage {
     private WebDriverWait wait;
 
     private By cartItems = By.className("cart_item");
+    private By cartItemNames = By.className("inventory_item_name");
     private By checkoutButton = By.id("checkout");
     private By continueShoppingButton = By.id("continue-shopping");
     private By removeButton = By.xpath("//button[contains(text(),'Remove')]");
@@ -35,12 +36,27 @@ public class CartPage {
         return driver.getCurrentUrl().contains("cart.html");
     }
 
+    // IMPORTANT METHOD (missing earlier)
+    public boolean isProductInCart(String productName) {
+
+        List<WebElement> items = driver.findElements(cartItemNames);
+
+        for (WebElement item : items) {
+            if (item.getText().equalsIgnoreCase(productName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void proceedToCheckout() {
+
         WebElement checkoutBtn = wait.until(
                 ExpectedConditions.presenceOfElementLocated(checkoutButton));
 
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block: 'center'});", checkoutBtn);
+                "arguments[0].scrollIntoView({block:'center'});", checkoutBtn);
 
         wait.until(ExpectedConditions.visibilityOf(checkoutBtn));
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
