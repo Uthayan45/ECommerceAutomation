@@ -2,15 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Uthayan45/EcommerceAutomation.git'
-            }
-        }
-
         stage('Build and Test') {
             steps {
-                bat 'mvn clean test'
+                dir('EcommerceAutomation4') {
+                    bat 'mvn clean test'
+                }
             }
         }
     }
