@@ -33,13 +33,13 @@ public class HomePage {
         WebElement cart = wait.until(
                 ExpectedConditions.presenceOfElementLocated(cartIcon));
 
+        wait.until(ExpectedConditions.visibilityOf(cart));
+
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", cart);
 
-        wait.until(ExpectedConditions.visibilityOf(cart));
-        wait.until(ExpectedConditions.elementToBeClickable(cart));
-
         try {
+            wait.until(ExpectedConditions.elementToBeClickable(cart));
             new Actions(driver).moveToElement(cart).click().perform();
         } catch (Exception e) {
             try {
