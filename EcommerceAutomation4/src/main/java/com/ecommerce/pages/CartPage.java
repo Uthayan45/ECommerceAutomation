@@ -1,53 +1,66 @@
 package com.ecommerce.pages;
 
+import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
-import java.util.List;
 
 public class CartPage {
-    WebDriver driver;
-    WebDriverWait wait;
-    
+
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    private By cartItems = By.className("cart_item");
+    private By checkoutButton = By.id("checkout");
+    private By continueShoppingButton = By.id("continue-shopping");
+    private By removeButton = By.xpath("//button[contains(text(),'Remove')]");
+
     public CartPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
-    
-    public boolean isProductInCart(String productName) {
-        System.out.println("🔍 Verifying product in cart: " + productName);
-        sleep(1000);
-        
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("inventory_item_name")));
-        List<WebElement> items = driver.findElements(By.className("inventory_item_name"));
-        
-        for (WebElement item : items) {
-            if (item.getText().equalsIgnoreCase(productName)) {
-                System.out.println("✅ Product verified in cart: " + productName);
-                return true;
-            }
-        }
-        System.out.println("❌ Product not found in cart");
-        return false;
+
+    public int getCartItemCount() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
+        List<WebElement> items = driver.findElements(cartItems);
+        return items.size();
     }
-    
+
+    public boolean isCartPageDisplayed() {
+        return driver.getCurrentUrl().contains("cart.html");
+    }
+
     public void proceedToCheckout() {
-        System.out.println("💳 Proceeding to checkout...");
-        sleep(1000);
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout")));
-        driver.findElement(By.id("checkout")).click();
-        sleep(1500);
-        System.out.println("✅ Checkout page opened");
-    }
-    
-    private void sleep(long millis) {
+        WebElement checkoutBtn = wait.until(
+                ExpectedConditions.presenceOfElementLocated(checkoutButton));
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center'});", checkoutBtn);
+
+        wait.until(ExpectedConditions.visibilityOf(checkoutBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
+
         try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            checkoutBtn.click();
+        } catch (Exception e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkoutBtn);
         }
+    }
+
+    public void clickContinueShopping() {
+        WebElement continueBtn = wait.until(
+                ExpectedConditions.elementToBeClickable(continueShoppingButton));
+        continueBtn.click();
+    }
+
+    public void removeProduct() {
+        WebElement removeBtn = wait.until(
+                ExpectedConditions.elementToBeClickable(removeButton));
+        removeBtn.click();
     }
 }
