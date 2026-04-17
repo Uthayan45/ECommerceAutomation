@@ -23,30 +23,31 @@ public class CartPage {
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     public boolean isCartPageDisplayed() {
+        wait.until(ExpectedConditions.urlContains("cart"));
         return driver.getCurrentUrl().contains("cart");
     }
 
     public int getCartItemCount() {
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cartItems));
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
         List<WebElement> items = driver.findElements(cartItems);
-
         return items.size();
     }
 
     public boolean isProductInCart(String productName) {
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cartItemNames));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
 
-        List<WebElement> items = driver.findElements(cartItemNames);
+        List<WebElement> products = driver.findElements(cartItemNames);
 
-        for (WebElement item : items) {
-            if (item.getText().trim().equalsIgnoreCase(productName.trim())) {
+        for (WebElement product : products) {
+
+            String name = product.getText().trim();
+
+            if (name.equalsIgnoreCase(productName.trim())) {
                 return true;
             }
         }
@@ -56,11 +57,14 @@ public class CartPage {
 
     public void proceedToCheckout() {
 
-        WebElement checkoutBtn = wait.until(
-                ExpectedConditions.elementToBeClickable(checkoutButton));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutButton));
+
+        WebElement checkoutBtn = driver.findElement(checkoutButton);
 
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView(true);", checkoutBtn);
+                "arguments[0].scrollIntoView({block:'center'});", checkoutBtn);
+
+        wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
 
         checkoutBtn.click();
     }
@@ -75,11 +79,20 @@ public class CartPage {
 
     public void removeProduct() {
 
-        List<WebElement> buttons = wait.until(
-                ExpectedConditions.presenceOfAllElementsLocatedBy(removeButtons));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartItems));
 
-        if (!buttons.isEmpty()) {
-            buttons.get(0).click();
+        List<WebElement> removeBtn = driver.findElements(removeButtons);
+
+        if (!removeBtn.isEmpty()) {
+
+            WebElement btn = removeBtn.get(0);
+
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView(true);", btn);
+
+            wait.until(ExpectedConditions.elementToBeClickable(btn));
+
+            btn.click();
         }
     }
 }
