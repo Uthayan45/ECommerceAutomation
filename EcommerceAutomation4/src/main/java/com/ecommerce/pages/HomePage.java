@@ -14,8 +14,8 @@ public class HomePage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    private By productsTitle = By.className("title");
-    private By cartIcon = By.cssSelector(".shopping_cart_link");
+    private By cartIcon = By.className("shopping_cart_link");
+    private By productTitle = By.className("title");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -23,17 +23,20 @@ public class HomePage {
     }
 
     public boolean isHomePageDisplayed() {
+
         WebElement title = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(productsTitle));
-        return title.getText().trim().equalsIgnoreCase("Products");
+                ExpectedConditions.visibilityOfElementLocated(productTitle));
+
+        return title.getText().equalsIgnoreCase("Products");
     }
 
     public void goToCart() {
+
         WebElement cart = wait.until(
-                ExpectedConditions.presenceOfElementLocated(cartIcon));
+                ExpectedConditions.visibilityOfElementLocated(cartIcon));
 
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block:'center'});", cart);
+                "arguments[0].scrollIntoView(true);", cart);
 
         wait.until(ExpectedConditions.elementToBeClickable(cart));
 
